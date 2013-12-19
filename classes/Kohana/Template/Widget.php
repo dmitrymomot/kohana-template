@@ -2,25 +2,65 @@
 
 class Kohana_Template_Widget implements Template_Interface {
 
-	protected $widget;
+	/**
+	 * Widget name
+	 *
+	 * @var string
+	 */
+	protected $_widget_name;
 
+	/**
+	 * Instance of class Request
+	 *
+	 * @var object
+	 */
+	protected $_widget_request;
+
+	/**
+	 * Creating request.
+	 *
+	 * @return object	// Instance of class Request
+	 */
+	public function request()
+	{
+		if ( ! $this->_widget_request)
+		{
+			$request = Request::initial();
+
+			$this->_widget_request = Request::factory($this->_widget_name)
+				->method($request->method())
+				->files($request->files())
+				->post($request->post())
+				->query($request->query());
+		}
+
+		return $this->_widget_request;
+	}
+
+	/**
+	 * Render widget
+	 *
+	 * @return string
+	 */
 	public function render()
 	{
-		return $this->widget->execute()->body();
+		return $this->request()->execute()->body();
 	}
 
-	public function __construct($name)
+	/**
+	 * Constructor of class Widget.
+	 *
+	 * @param string $widget_name
+	 * @return void
+	 */
+	public function __construct($widget_name)
 	{
-		$request = Request::initial();
-
-		$widget = Request::factory($name)
-			->method($request->method())
-			->post($request->post())
-			->query($request->query());
-
-		$this->widget = $widget;
+		$this->_widget_name = $widget_name;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function __toString()
 	{
 		return $this->render();
