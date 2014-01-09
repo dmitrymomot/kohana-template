@@ -5,7 +5,7 @@ return array(
 	'test' => array(
 		// 'test' 			=> 'test',
 		// 'test-index' 	=> 'test/index',
-		'test2' 	=> 'test/test2',
-		'test1' 	=> 'test/test1',
+		// 'test2' 	=> 'test/test2',
+		// 'test1' 	=> 'test/test1',
 	),
 );
