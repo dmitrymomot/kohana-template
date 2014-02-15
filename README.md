@@ -1,2 +1,2 @@
-kohana-template
-===============
+DON'T USE IT!!!
+===========
